@@ -1,2 +1,2 @@
 # mfe
-基于qiankun改造的微前端应用
+基于qiankun改造的微前端主应用
