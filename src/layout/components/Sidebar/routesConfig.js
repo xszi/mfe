@@ -1,11 +1,11 @@
 const routes = [
   {
     path: '/layout/v2-sub-app',
-    meta: { title: '测试模块', icon: 'record' }
+    meta: { title: 'vu2子应用', icon: 'record' }
   },
   {
     path: '/layout/v3-sub-app',
-    meta: { title: '测试模块2', icon: 'record' }
+    meta: { title: 'vu3子应用', icon: 'record' }
   },
   {
     path: 'iframe',
