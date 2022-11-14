@@ -30,7 +30,7 @@ export default {
   },
   computed: {
     platform() {
-      return 'AE87'
+      return 'main-app'
     },
     firstToute() {
       const menus = JSON.parse(getBrowserCache('menus'))
