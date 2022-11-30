@@ -58,9 +58,10 @@ export default {
       })
     },
     handleGlobalState() {
-      actions.setGlobalState({ visitedViews: [], cachedViews: [] })
+      actions.setGlobalState({ visitedViews: [], cachedViews: [], value: 0 })
       // 注册一个观察者函数
       actions.onGlobalStateChange((state, prevState) => {
+        console.log(state, 'state===')
         if (state.cachedViews.length > 0) {
           setBrowserCache('visitedViews', JSON.stringify(state.visitedViews))
           setBrowserCache('cachedViews', JSON.stringify(state.cachedViews))

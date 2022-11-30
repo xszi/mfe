@@ -5,7 +5,17 @@ const routes = [
   },
   {
     path: '/layout/v3-sub-app',
-    meta: { title: 'vu3子应用', icon: 'record' }
+    meta: { title: 'vu3子应用', icon: 'record' },
+    children: [
+      {
+        path: '/layout/v3-sub-app/#/monitor',
+        meta: { title: 'monitor', icon: '' }
+      },
+      {
+        path: '/layout/v3-sub-app/#/login',
+        meta: { title: 'login', icon: '' }
+      }
+    ]
   },
   {
     path: 'iframe',

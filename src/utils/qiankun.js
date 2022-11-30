@@ -1,5 +1,8 @@
 import { registerMicroApps } from 'qiankun'
 import { getLoginJumpBackLink } from '@/utils/util'
+// 验证globalState在刷新之后是否还存在
+// 什么是JS Entry, 为什么用HTML Entry
+// single-spa
 /**
  * @param {*} router
  */
