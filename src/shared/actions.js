@@ -2,8 +2,7 @@
 import { initGlobalState } from 'qiankun'
 
 const initialState = {
-  visitedViews: [],
-  cachedViews: []
+  visitedViews: []
 }
 
 const actions = initGlobalState(initialState)

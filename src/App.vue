@@ -29,8 +29,6 @@ export default {
           // 切换到页面执行事件
           const storeToken = this.$store.state.user.signFrameToken
           const localToken = getBrowserCache('sign_frame_token')
-          console.log(storeToken, 'xxxxxx111')
-          console.log(localToken, 'xxxxxx222')
           if (storeToken !== localToken) {
             this.$alert('检测到登录用户有变更，请确认使用新登录用户操作。', '系统提示', {
               confirmButtonText: '确定',
@@ -58,12 +56,11 @@ export default {
       })
     },
     handleGlobalState() {
-      actions.setGlobalState({ visitedViews: [], cachedViews: [] })
+      actions.setGlobalState({ visitedViews: [], value: 0 })
       // 注册一个观察者函数
       actions.onGlobalStateChange((state, prevState) => {
-        if (state.cachedViews.length > 0) {
+        if (state.visitedViews.length > 0) {
           setBrowserCache('visitedViews', JSON.stringify(state.visitedViews))
-          setBrowserCache('cachedViews', JSON.stringify(state.cachedViews))
           EventBus.$emit('setRouteCache')
         }
       })

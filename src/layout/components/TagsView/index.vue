@@ -6,11 +6,10 @@
         ref="tag"
         :key="tag.path"
         :class="isActive(tag)?'active':''"
-        :to="{ path: tag.childApp?`/layout/${tag.childApp}${tag.path}`:tag.fullPath, query: tag.query, fullPath: tag.childApp?`/layout/${tag.childApp}${tag.path}`:tag.fullPath }"
+        :to="getToPathObj(tag)"
         tag="span"
         class="tags-view-item"
         @click.middle.native="!isAffix(tag)?closeSelectedTag(tag):''"
-        @contextmenu.prevent.native="openMenu(tag,$event)"
       >
         {{ tag.title }}
         <span v-if="!isAffix(tag) && visitedViews.length>1" class="el-icon-close" @click.prevent.stop="closeSelectedTag(tag)" />
@@ -66,10 +65,17 @@ export default {
     getRouteCache() {
       this.visitedViews = JSON.parse(getBrowserCache('visitedViews'))
     },
+    getToPathObj(tag) {
+      return {
+        path: tag.meta && tag.meta.childApp ? `/layout/${tag.meta.childApp}/${tag.href}` : tag.fullPath,
+        query: tag.query,
+        fullPath: tag.meta && tag.meta.childApp ? `/layout/${tag.meta.childApp}/${tag.href}` : tag.fullPath
+      }
+    },
     isActive(route) {
-      if (route.childApp) {
-        const matchPath = `/layout/${route.childApp}${route.path}`
-        return matchPath.split('?')[0] === this.$route.path
+      if (route.meta?.childApp) {
+        const matchPath = `/layout/${route.meta.childApp}/${route.href}`
+        return matchPath.split('?')[0] === this.$route.fullPath
       } else {
         return route.path === this.$route.path
       }
@@ -141,33 +147,22 @@ export default {
     },
     closeSelectedTag(view) {
       routeCache.delView(view)
-      const visitedViews = JSON.parse(getBrowserCache('visitedViews'))
+      const visitedViews = JSON.parse(sessionStorage.getItem('visitedViews'))
       this.visitedViews = visitedViews
       if (this.isActive(view)) {
         this.toLastView(visitedViews, view)
       }
     },
-    closeOthersTags() {
-      routeCache.delOthersViews()
-      this.$router.push(this.selectedTag)
-      this.moveToCurrentTag()
-    },
-    closeAllTags(view) {
-      routeCache.delAllViews()
-      if (this.affixTags.some(tag => tag.path === view.path)) {
-        return
-      }
-      const visitedViews = getBrowserCache('visitedViews')
-      this.toLastView(visitedViews, view)
-    },
     toLastView(visitedViews, view) {
       const latestView = visitedViews.slice(-1)[0]
       if (latestView) {
-        const matchPath = `/layout/${latestView.childApp}${latestView.fullPath}`
-        this.$router.push(latestView.childApp ? matchPath : latestView.fullPath)
+        let lastRoutePath
+        if (latestView.meta?.childApp) {
+          // 子应用使用hash模式路由
+          lastRoutePath = `/layout/${latestView.meta.childApp}/${latestView.href}`
+        }
+        this.$router.push(latestView.meta?.childApp ? lastRoutePath : latestView.fullPath)
       } else {
-        // now the default is to redirect to the home page if there is no tags-view,
-        // you can adjust it according to your needs.
         if (view.name === 'home') {
           // to reload home page
           this.$router.replace({ path: '/redirect' + view.fullPath })
@@ -175,23 +170,6 @@ export default {
           this.$router.push('/')
         }
       }
-    },
-    openMenu(tag, e) {
-      const menuMinWidth = 105
-      const offsetLeft = this.$el.getBoundingClientRect().left // container margin left
-      const offsetWidth = this.$el.offsetWidth // container width
-      const maxLeft = offsetWidth - menuMinWidth // left boundary
-      const left = e.clientX - offsetLeft + 15 // 15: margin right
-
-      if (left > maxLeft) {
-        this.left = maxLeft
-      } else {
-        this.left = left
-      }
-
-      this.top = e.clientY
-      this.visible = true
-      this.selectedTag = tag
     },
     closeMenu() {
       this.visible = false
