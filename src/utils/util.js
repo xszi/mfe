@@ -70,8 +70,6 @@ export async function getLoginPage() {
 
 export function handleBrowerCache() {
   const visitedViews = getBrowserCache('visitedViews') ? JSON.parse(getBrowserCache('visitedViews')) : []
-  const cachedViews = getBrowserCache('cachedViews') ? JSON.parse(getBrowserCache('cachedViews')) : []
   setBrowserCache('visitedViews', JSON.stringify(visitedViews))
-  setBrowserCache('cachedViews', JSON.stringify(cachedViews))
 }
 

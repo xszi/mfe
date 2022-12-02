@@ -6,7 +6,7 @@
         ref="tag"
         :key="tag.path"
         :class="isActive(tag)?'active':''"
-        :to="{ path: tag.childApp?`/layout/${tag.childApp}${tag.path}`:tag.fullPath, query: tag.query, fullPath: tag.childApp?`/layout/${tag.childApp}${tag.path}`:tag.fullPath }"
+        :to="{ path: tag.meta && tag.meta.childApp?`/layout/${tag.meta.childApp}${tag.path}`:tag.fullPath, query: tag.query, fullPath: tag.meta && tag.meta.childApp?`/layout/${tag.meta.childApp}${tag.path}`:tag.fullPath }"
         tag="span"
         class="tags-view-item"
         @click.middle.native="!isAffix(tag)?closeSelectedTag(tag):''"
@@ -65,11 +65,12 @@ export default {
   methods: {
     getRouteCache() {
       this.visitedViews = JSON.parse(getBrowserCache('visitedViews'))
+      console.log(this.visitedViews, 'hhh')
     },
     isActive(route) {
-      if (route.childApp) {
-        const matchPath = `/layout/${route.childApp}${route.path}`
-        return matchPath.split('?')[0] === this.$route.path
+      if (route.meta?.childApp) {
+        const matchPath = `/layout/${route.meta.childApp}/${route.href}`
+        return matchPath.split('?')[0] === this.$route.fullPath
       } else {
         return route.path === this.$route.path
       }
@@ -163,8 +164,8 @@ export default {
     toLastView(visitedViews, view) {
       const latestView = visitedViews.slice(-1)[0]
       if (latestView) {
-        const matchPath = `/layout/${latestView.childApp}${latestView.fullPath}`
-        this.$router.push(latestView.childApp ? matchPath : latestView.fullPath)
+        const matchPath = `/layout/${latestView.meta.childApp}${latestView.fullPath}`
+        this.$router.push(latestView.meta.childApp ? matchPath : latestView.fullPath)
       } else {
         // now the default is to redirect to the home page if there is no tags-view,
         // you can adjust it according to your needs.
