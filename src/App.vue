@@ -29,8 +29,6 @@ export default {
           // 切换到页面执行事件
           const storeToken = this.$store.state.user.signFrameToken
           const localToken = getBrowserCache('sign_frame_token')
-          console.log(storeToken, 'xxxxxx111')
-          console.log(localToken, 'xxxxxx222')
           if (storeToken !== localToken) {
             this.$alert('检测到登录用户有变更，请确认使用新登录用户操作。', '系统提示', {
               confirmButtonText: '确定',
