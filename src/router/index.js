@@ -12,7 +12,12 @@ export const constantRoutes = [
     component: () => import('@/views/404'),
     hidden: true
   },
-
+  {
+    path: '/login',
+    component: () => import('@/views/login/index'),
+    meta: { title: '首页', icon: '' },
+    hidden: true
+  },
   {
     path: '/',
     component: Layout,

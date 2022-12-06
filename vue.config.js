@@ -14,7 +14,7 @@ const name = defaultSettings.title // page title
 // For example, Mac: sudo npm run
 // You can change the port by the following methods:
 // port = 9528 npm run dev OR npm run dev --port = 9528
-const port = process.env.port || process.env.npm_config_port || 9999 // dev port
+const port = process.env.port || process.env.npm_config_port || 7000 // dev port
 
 // All configuration item explanations can be find in https://cli.vuejs.org/config/
 module.exports = {
@@ -41,7 +41,8 @@ module.exports = {
     proxy: {
       '/API': {
         // 虚拟目录
-        target: 'https://uat-fq.esnotary.com',
+        target: 'http://localhost:7000',
+        // target: 'https://uat-fq.esnotary.com',
         // target: 'http://192.168.88.115:18311/api/processConfig', // 签署流程工具开发环境
         // target: 'https://uat-sign-process-config.fxnotary.com/api/processConfig', // 签署流程工具测试环境
         changeOrigin: true,

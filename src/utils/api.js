@@ -36,6 +36,7 @@ export const API = {
    */
   post: async(url, params) => {
     const res = await post(apiUrl + url, params)
+    console.log(res, 'mmm')
     if (res.code === 0) {
       return res
     } else if (res.code === 10003) {
