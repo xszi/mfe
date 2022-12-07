@@ -15,6 +15,8 @@ export function handleQianKunApps(router) {
       container: '#appContainer',
       activeRule: '/layout/v2-sub-app',
       props: {
+        // 登录信息共享
+        token: sessionStorage.getItem('sign_frame_token'),
         // 此处将父应用的 url 传入子应用
         parAppUrl: locationUrl,
         // 此处将父应用的 VueRouter 实例 传入子应用
@@ -27,6 +29,8 @@ export function handleQianKunApps(router) {
       container: '#appContainer',
       activeRule: '/layout/v3-sub-app',
       props: {
+        // 登录信息共享
+        token: sessionStorage.getItem('sign_frame_token'),
         // 此处将父应用的 url 传入子应用
         parAppUrl: locationUrl,
         // 此处将父应用的 VueRouter 实例 传入子应用
