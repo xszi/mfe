@@ -82,6 +82,8 @@ export default {
             serviceLogin(params)
               .then(res => {
                 if (res.code === 0) {
+                  sessionStorage.setItem('sign_frame_token', 'dasdkasdkap')
+                  this.$router.push('/home')
                   console.log('验证码正确。')
                 } else {
                   // 使用dom操作更新验证码

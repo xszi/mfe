@@ -36,10 +36,11 @@ export function removeBrowserCache(key) {
 export async function logout() {
   sessionStorage.clear()
   localStorage.clear()
-  const url = await getLoginPage()
-  if (url) {
-    window.location.href = url
-  }
+  // const url = await getLoginPage()
+  // if (url) {
+  //   window.location.href = url
+  // }
+  window.location.href = window.location.origin
 }
 
 export function getLoginJumpBackLink() {
