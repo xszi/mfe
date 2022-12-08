@@ -4,11 +4,11 @@ const routes = [
     meta: { title: 'SUB-JAY', icon: 'record', childApp: 'v3-sub-app' },
     children: [
       {
-        path: '/layout/v2-sub-app/nginx-prefix/nginx',
+        path: '/layout/v2-sub-app/nginx-prefix/nginx/desc',
         meta: { title: '可爱女人', icon: '', childApp: 'v2-sub-app' }
       },
       {
-        path: '/layout/v2-sub-app/nginx-prefix/other',
+        path: '/layout/v2-sub-app/nginx-prefix/other/desc',
         meta: { title: '黑色幽默', icon: '', childApp: 'v2-sub-app' }
       }
     ]
@@ -22,11 +22,11 @@ const routes = [
         meta: { title: '夜曲', icon: '', childApp: 'v3-sub-app' }
       },
       {
-        path: '/layout/v3-sub-app/#/test',
+        path: '/layout/v3-sub-app/#/test/index',
         meta: { title: '飘移', icon: '', childApp: 'v3-sub-app' }
       },
       {
-        path: '/layout/v3-sub-app/#/monitor',
+        path: '/layout/v3-sub-app/#/monitor/index',
         meta: { title: '一路向北', icon: '', childApp: 'v3-sub-app' }
       }
     ]

@@ -38,12 +38,11 @@ export default {
     },
     activeMenu() {
       const route = this.$route
-      const { meta, path } = route
-      // if set path, the sidebar will highlight the path you set
+      const { meta, fullPath } = route
       if (meta.activeMenu) {
         return meta.activeMenu
       }
-      return path
+      return fullPath
     },
     showLogo() {
       return this.$store.state.settings.sidebarLogo
