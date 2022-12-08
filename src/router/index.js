@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import { getBrowserCache } from '@/utils/util'
 Vue.use(Router)
 
 import Layout from '@/layout'
@@ -15,13 +14,13 @@ export const constantRoutes = [
   {
     path: '/login',
     component: () => import('@/views/login/index'),
-    meta: { title: '首页', icon: '' },
+    meta: { title: '登陆', icon: '' },
     hidden: true
   },
   {
     path: '/',
     component: Layout,
-    redirect: JSON.parse(getBrowserCache('menus')) ? JSON.parse(getBrowserCache('menus'))[0].children[0].path : '/home',
+    redirect: JSON.parse(sessionStorage.getItem('menus')) ? JSON.parse(sessionStorage.getItem('menus'))[0].children[0].path : '/home',
     children: [{
       path: 'home',
       name: 'home',
@@ -42,7 +41,7 @@ export const constantRoutes = [
     children: [{
       path: 'iframe-page',
       name: 'IframePage',
-      meta: { title: 'iframe页面', icon: '', noCache: 'true' },
+      meta: { title: 'Iframe', icon: '', noCache: 'true' },
       component: () => import('@/views/iframePage/index')
     }]
   }

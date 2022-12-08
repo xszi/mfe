@@ -7,7 +7,7 @@
 <script>
 import EventBus from '@/utils/eventBus'
 import actions from '@/shared/actions'
-import { getBrowserCache, setBrowserCache, logout } from '@/utils/util'
+import { logout } from '@/utils/util'
 
 export default {
   name: 'App',
@@ -28,7 +28,7 @@ export default {
         if (document.visibilityState === 'visible') { // 状态判断：显示（切换到当前页面）
           // 切换到页面执行事件
           const storeToken = this.$store.state.user.signFrameToken
-          const localToken = getBrowserCache('sign_frame_token')
+          const localToken = sessionStorage.getItem('sign_frame_token')
           if (storeToken !== localToken) {
             this.$alert('检测到登录用户有变更，请确认使用新登录用户操作。', '系统提示', {
               confirmButtonText: '确定',
@@ -60,7 +60,7 @@ export default {
       // 注册一个观察者函数
       actions.onGlobalStateChange((state, prevState) => {
         if (state.visitedViews.length > 0) {
-          setBrowserCache('visitedViews', JSON.stringify(state.visitedViews))
+          sessionStorage.setItem('visitedViews', JSON.stringify(state.visitedViews))
           EventBus.$emit('setRouteCache')
         }
       })

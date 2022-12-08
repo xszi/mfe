@@ -14,7 +14,6 @@
 </template>
 
 <script>
-import { getBrowserCache } from '@/utils/util'
 export default {
   name: 'SidebarLogo',
   props: {
@@ -30,10 +29,10 @@ export default {
   },
   computed: {
     platform() {
-      return 'main-app'
+      return 'MAIN'
     },
     firstToute() {
-      const menus = JSON.parse(getBrowserCache('menus'))
+      const menus = JSON.parse(sessionStorage.getItem('menus'))
       return menus && menus[0].children[0].path || ''
     }
   }

@@ -11,7 +11,7 @@
         class="tags-view-item"
         @click.middle.native="!isAffix(tag)?closeSelectedTag(tag):''"
       >
-        {{ tag.title }}
+        {{ tag.meta ? tag.meta.title : '' }}
         <span v-if="!isAffix(tag) && visitedViews.length>1" class="el-icon-close" @click.prevent.stop="closeSelectedTag(tag)" />
       </router-link>
     </scroll-pane>
@@ -20,7 +20,6 @@
 
 <script>
 import EventBus from '@/utils/eventBus'
-import { getBrowserCache } from '@/utils/util'
 import { routeCache } from '@/utils/routeCache'
 import ScrollPane from './ScrollPane'
 import path from 'path'
@@ -58,23 +57,30 @@ export default {
   mounted() {
     this.initTags()
     this.addTags()
-    this.visitedViews = JSON.parse(getBrowserCache('visitedViews')) ? JSON.parse(getBrowserCache('visitedViews')) : [this.$route]
+    this.visitedViews = JSON.parse(sessionStorage.getItem('visitedViews')) ? JSON.parse(sessionStorage.getItem('visitedViews')) : [this.$route]
     EventBus.$on('setRouteCache', this.getRouteCache)
   },
   methods: {
     getRouteCache() {
-      this.visitedViews = JSON.parse(getBrowserCache('visitedViews'))
+      this.visitedViews = JSON.parse(sessionStorage.getItem('visitedViews'))
     },
     getToPathObj(tag) {
+      let path = ''; let fullPath = ''
+      if (tag.meta?.childApp) {
+        path = tag.href ? `/layout/${tag.meta.childApp}/${tag.href}` : `/layout/${tag.meta.childApp}${tag.path}`
+        fullPath = tag.href ? `/layout/${tag.meta.childApp}/${tag.href}` : `/layout/${tag.meta.childApp}${tag.path}`
+      } else {
+        path = tag.fullPath
+      }
       return {
-        path: tag.meta && tag.meta.childApp ? `/layout/${tag.meta.childApp}/${tag.href}` : tag.fullPath,
+        path,
         query: tag.query,
-        fullPath: tag.meta && tag.meta.childApp ? `/layout/${tag.meta.childApp}/${tag.href}` : tag.fullPath
+        fullPath
       }
     },
     isActive(route) {
       if (route.meta?.childApp) {
-        const matchPath = `/layout/${route.meta.childApp}/${route.href}`
+        const matchPath = route.href ? `/layout/${route.meta.childApp}/${route.href}` : `/layout/${route.meta.childApp}${route.path}`
         return matchPath.split('?')[0] === this.$route.fullPath
       } else {
         return route.path === this.$route.path
@@ -116,7 +122,8 @@ export default {
     addTags() {
       const { name } = this.$route
       if (name) {
-        routeCache.addView(this.$route)
+        console.log(this.$route, 'xxxfff')
+        routeCache.addVisitedView(this.$route)
       }
       return false
     },
@@ -146,7 +153,7 @@ export default {
       })
     },
     closeSelectedTag(view) {
-      routeCache.delView(view)
+      routeCache.delVisitedView(view)
       const visitedViews = JSON.parse(sessionStorage.getItem('visitedViews'))
       this.visitedViews = visitedViews
       if (this.isActive(view)) {
@@ -159,7 +166,7 @@ export default {
         let lastRoutePath
         if (latestView.meta?.childApp) {
           // 子应用使用hash模式路由
-          lastRoutePath = `/layout/${latestView.meta.childApp}/${latestView.href}`
+          lastRoutePath = latestView.href ? `/layout/${latestView.meta.childApp}/${latestView.href}` : `/layout/${latestView.meta.childApp}${latestView.path}`
         }
         this.$router.push(latestView.meta?.childApp ? lastRoutePath : latestView.fullPath)
       } else {

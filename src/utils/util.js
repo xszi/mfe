@@ -3,31 +3,6 @@ import store from '@/store'
  * @param {string} key
  * @returns {String | Array | Object}
  */
-export function getBrowserCache(key) {
-  return sessionStorage.getItem(key) ? sessionStorage.getItem(key) : localStorage.getItem(key)
-}
-/**
- * @param {string, string} (key, value)
- * @returns {String | Array | Object}
- */
-export function setBrowserCache(key, value) { // 非同步浏览器存储
-  sessionStorage.setItem(key, value)
-  if (!localStorage.getItem(key) || localStorage.getItem(key) === '[]') {
-    localStorage.setItem(key, value)
-  }
-}
-/**
- * @param {string, string} (key, value)
- * @returns {String | Array | Object}
- */
-export function setBrowserCacheSync(key, value) { // 同步浏览器存储
-  sessionStorage.setItem(key, value)
-  localStorage.setItem(key, value)
-}
-/**
- * @param {string} key
- * @returns {String | Array | Object}
- */
 export function removeBrowserCache(key) {
   sessionStorage.removeItem(key)
   localStorage.removeItem(key)
@@ -67,10 +42,5 @@ export async function getLoginPage() {
     const res = await store.dispatch('user/getLoginPage', locationUrl)
     return res.data
   }
-}
-
-export function handleBrowerCache() {
-  const visitedViews = getBrowserCache('visitedViews') ? JSON.parse(getBrowserCache('visitedViews')) : []
-  setBrowserCache('visitedViews', JSON.stringify(visitedViews))
 }
 

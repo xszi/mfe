@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { getBrowserCache, logout } from '@/utils/util'
+import { logout } from '@/utils/util'
 import { mapGetters } from 'vuex'
 import Hamburger from '@/components/Hamburger'
 
@@ -42,19 +42,10 @@ export default {
       'avatar'
     ]),
     currentUser() {
-      const userInfo = getBrowserCache('userInfo') ? JSON.parse(getBrowserCache('userInfo')) : {}
-      return userInfo && userInfo.realName || 'JAY'
+      return 'JAY'
     },
     showCurrentUser() {
-      let result = true
-      try {
-        if (top.location.href) {
-          result = true
-        }
-      } catch (err) {
-        result = false
-      }
-      return result
+      return true
     }
   },
   mounted() {
