@@ -2,13 +2,23 @@
 
 #### 主要功能改造
 
-1. iframe 路由映射
-2. 登陆状态共享（验证码登录）
-3. 跨应用跳转
-4. 标签导航共享
+1. iframe 路由映射 ———— 创建独立路由的 Iframe 页面
+2. 登陆状态共享（验证码登录）———— 父应用通过 props 传递登录信息到子应用
+3. 跨应用跳转 ———— 父应用向子应用传递 Vue-router 实例， this.$parRouter
+4. 标签导航共享 ———— 父子应用的 visitedViews 统一缓存在 sessionStorage, 使用 GlobalState 触发监听更新
 5. nginx 配置入口，缓存
-6. 跨应用页面缓存（未实现）
-7. 本地开发库模式 / 链接模式 （未实现）
+
+- 跨域 ———— Access-Control-Allow-Origin
+- HTTP 缓存 ———— Cache-Control no-cache，不使用强制缓存(tag / last-modified)
+  **注：**
+  > 如果什么缓存策略都没设置，浏览器会采用一个启发式的算法，通常会取响应头中的 Date 减去 Last-Modified 值的 10% 作为缓存时间。
+  > 重新部署后，router.onError 监听页面跳转失败刷新页面，拉取最新 js 静态文件
+
+6. 跨应用页面缓存 keep-alive（待实现）
+7. 公共依赖复用（待实现）
+8. 项目间组件复用（待实现）
+9. 嵌套子子应用（待实现）
+10. 嵌入 blink-mind react 子应用（待实现）
 
 #### UMD 格式打包
 

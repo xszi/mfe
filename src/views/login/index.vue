@@ -42,7 +42,7 @@ export default {
   data() {
     return {
       src: require('../../assets/favicon.png'),
-      captchaUrl: 'http://localhost:7000/api/captcha/',
+      captchaUrl: 'http://localhost:3000/api/captcha/',
       form: {
         loginName: '',
         password: '',
@@ -68,7 +68,7 @@ export default {
   },
   methods: {
     reloadCaptcha() {
-      this.captchaUrl = 'http://localhost:7000/api/captcha?t=' + new Date().getTime()
+      this.captchaUrl = 'http://localhost:3000/api/captcha?t=' + new Date().getTime()
     },
     async handleSubmit() {
       try {

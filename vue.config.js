@@ -41,7 +41,7 @@ module.exports = {
     proxy: {
       '/API': {
         // 虚拟目录
-        target: 'http://localhost:7000',
+        target: 'http://localhost:3000',
         // target: 'https://uat-fq.esnotary.com',
         // target: 'http://192.168.88.115:18311/api/processConfig', // 签署流程工具开发环境
         // target: 'https://uat-sign-process-config.fxnotary.com/api/processConfig', // 签署流程工具测试环境
