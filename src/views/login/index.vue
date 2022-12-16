@@ -34,8 +34,8 @@
 </template>
 
 <script>
-import md5 from 'blueimp-md5'
-import { serviceLogin } from '@/api/user'
+// import md5 from 'blueimp-md5'
+// import { serviceLogin } from '@/api/user'
 // import request from '@/utils/request'
 // import axios from 'axios'
 export default {
@@ -71,35 +71,37 @@ export default {
       this.captchaUrl = 'http://localhost:3000/api/captcha?t=' + new Date().getTime()
     },
     async handleSubmit() {
-      try {
-        this.$refs['loginForm'].validate((valid) => {
-          if (valid) {
-            const params = {
-              loginName: this.form.loginName.trim(),
-              password: md5(this.form.password.trim()),
-              code: this.form.code.trim().toLowerCase()
-            }
-            serviceLogin(params)
-              .then(res => {
-                if (res.code === 0) {
-                  sessionStorage.setItem('sign_frame_token', 'dasdkasdkap')
-                  this.$router.push('/home')
-                  console.log('验证码正确。')
-                } else {
-                  // 使用dom操作更新验证码
-                  document.getElementById('codeImg')?.click()
-                }
-              })
-          } else {
-            console.log('error submit!!')
-            return false
-          }
-        })
-      } catch (err) {
-        console.log(err)
-      } finally {
-        // setLoading(false)
-      }
+      sessionStorage.setItem('sign_frame_token', 'dasdkasdkap')
+      this.$router.push('/home')
+      // try {
+      //   this.$refs['loginForm'].validate((valid) => {
+      //     if (valid) {
+      //       const params = {
+      //         loginName: this.form.loginName.trim(),
+      //         password: md5(this.form.password.trim()),
+      //         code: this.form.code.trim().toLowerCase()
+      //       }
+      //       serviceLogin(params)
+      //         .then(res => {
+      //           if (res.code === 0) {
+      //             sessionStorage.setItem('sign_frame_token', 'dasdkasdkap')
+      //             this.$router.push('/home')
+      //             console.log('验证码正确。')
+      //           } else {
+      //             // 使用dom操作更新验证码
+      //             document.getElementById('codeImg')?.click()
+      //           }
+      //         })
+      //     } else {
+      //       console.log('error submit!!')
+      //       return false
+      //     }
+      //   })
+      // } catch (err) {
+      //   console.log(err)
+      // } finally {
+      //   // setLoading(false)
+      // }
     }
   }
 }

@@ -14,7 +14,6 @@ import router from './router'
 
 import '@/icons' // icon
 import '@/permission' // permission control
-import { handleQianKunApps } from '@/utils/qiankun'
 
 if (process.env.NODE_ENV === 'development') {
   // sessionStorage.setItem('sign_frame_token', 'eyJhbGciOiJIUzUxMiJ9.eyJ1aWQiOiI1MDY2NTQ0MjMyMzEyNzA5MTIiLCJzdWIiOiJhY2VzaGkxIiwiY2ZnIjoiTEVHQUxfU0VSVklDRSIsInV0eXBlIjoiMyIsIm5pZCI6IjMxNjQwNDYwMTI0MDg2NjgxNiIsImFpZCI6IjYyMTI3MzgxMjQ4MTY4MzQ1NiIsImp0aSI6ImY0YTAyZTQ3NmVlOTQ1OWE5MTQzNTk2NDEzZjE0NDYwIiwiY2lkIjoiMzg0ODc3MDUxMzU0MjEwMzA0In0.Y4XnOHPAG2B_oWFAoWiH_Mu0bAqJz3g_pRc_YM5IGR4bYVmPEC3gsNXl2dRxxPfbAKTdu6xpBp_OaZXzUGHEtQ')
@@ -31,5 +30,3 @@ new Vue({
   store,
   render: h => h(App)
 })
-
-handleQianKunApps(router)

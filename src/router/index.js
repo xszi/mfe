@@ -1,5 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import { loadMicroApp } from 'qiankun'
+import { microApps } from '@/utils/qiankun'
+import store from '@/store'
 Vue.use(Router)
 
 import Layout from '@/layout'
@@ -54,6 +57,24 @@ const createRouter = () => new Router({
 })
 
 const router = createRouter()
+
+router.beforeEach((to, from, next) => {
+  // console.log(to, 'toto')
+  const hasApp = to.fullPath.includes('layout')
+  if (hasApp) {
+    const curSubAppName = to.fullPath.split('/')[2]
+    const storedSubApps = store.state.app.subApps
+    if (!storedSubApps.has(curSubAppName)) {
+      console.log(storedSubApps.has('v2-sub-app'), 111)
+      loadMicroApp(microApps.find(app => app.name === curSubAppName))
+      store.commit('app/addSubApps', curSubAppName)
+    }
+    store.commit('app/displayCurHiddenOtherApps', curSubAppName)
+  } else {
+    store.commit('app/displayCurHiddenOtherApps')
+  }
+  next()
+})
 
 export function resetRouter() {
   const newRouter = createRouter()

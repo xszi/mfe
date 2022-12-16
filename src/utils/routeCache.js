@@ -23,7 +23,6 @@ function addVisitedView(view) {
     }
     visitedViews.push(handleView)
   }
-
   actions.setGlobalState({ visitedViews })
   sessionStorage.setItem('visitedViews', JSON.stringify(visitedViews))
   EventBus.$emit('setRouteCache')

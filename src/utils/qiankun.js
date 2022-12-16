@@ -1,42 +1,41 @@
 import { registerMicroApps } from 'qiankun'
+import router from '@/router'
 import { getLoginJumpBackLink } from '@/utils/util'
 // 验证globalState在刷新之后是否还存在
 // 什么是JS Entry, 为什么用HTML Entry
 // single-spa
-/**
- * @param {*} router
- */
-export function handleQianKunApps(router) {
-  const locationUrl = getLoginJumpBackLink()
-  const microApps = [
-    {
-      name: 'v2-sub-app',
-      entry: process.env.VUE_APP_V2_SUBAPP_ENTRY,
-      container: '#appContainer',
-      activeRule: '/layout/v2-sub-app',
-      props: {
-        // 登录信息共享
-        token: sessionStorage.getItem('sign_frame_token'),
-        // 此处将父应用的 url 传入子应用
-        parAppUrl: locationUrl,
-        // 此处将父应用的 VueRouter 实例 传入子应用
-        parRouter: router
-      }
-    },
-    {
-      name: 'v3-sub-app',
-      entry: process.env.VUE_APP_V3_SUBAPP_ENTRY,
-      container: '#appContainer',
-      activeRule: '/layout/v3-sub-app',
-      props: {
-        // 登录信息共享
-        token: sessionStorage.getItem('sign_frame_token'),
-        // 此处将父应用的 url 传入子应用
-        parAppUrl: locationUrl,
-        // 此处将父应用的 VueRouter 实例 传入子应用
-        parRouter: router
-      }
+const locationUrl = getLoginJumpBackLink()
+export const microApps = [
+  {
+    name: 'v2-sub-app',
+    entry: process.env.VUE_APP_V2_SUBAPP_ENTRY,
+    container: '#v2-sub-app',
+    activeRule: '/layout/v2-sub-app',
+    props: {
+      // 登录信息共享
+      token: sessionStorage.getItem('sign_frame_token'),
+      // 此处将父应用的 url 传入子应用
+      parAppUrl: locationUrl,
+      // 此处将父应用的 VueRouter 实例 传入子应用
+      parRouter: router
     }
-  ]
+  },
+  {
+    name: 'v3-sub-app',
+    entry: process.env.VUE_APP_V3_SUBAPP_ENTRY,
+    container: '#v3-sub-app',
+    activeRule: '/layout/v3-sub-app',
+    props: {
+      // 登录信息共享
+      token: sessionStorage.getItem('sign_frame_token'),
+      // 此处将父应用的 url 传入子应用
+      parAppUrl: locationUrl,
+      // 此处将父应用的 VueRouter 实例 传入子应用
+      parRouter: router
+    }
+  }
+]
+
+export function handleQianKunApps() {
   registerMicroApps(microApps)
 }

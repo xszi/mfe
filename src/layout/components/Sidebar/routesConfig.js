@@ -18,16 +18,16 @@ const routes = [
     meta: { title: 'SUB-十一月的肖邦', icon: 'record', childApp: 'v3-sub-app' },
     children: [
       {
-        path: '/layout/v3-sub-app/#/dashboard',
-        meta: { title: '夜曲', icon: '', childApp: 'v3-sub-app' }
-      },
-      {
         path: '/layout/v3-sub-app/#/test/index',
         meta: { title: '飘移', icon: '', childApp: 'v3-sub-app' }
       },
       {
         path: '/layout/v3-sub-app/#/monitor/index',
         meta: { title: '一路向北', icon: '', childApp: 'v3-sub-app' }
+      },
+      {
+        path: '/layout/v3-sub-app/#/dashboard/index',
+        meta: { title: '夜曲', icon: '', childApp: 'v3-sub-app' }
       }
     ]
   },

@@ -6,7 +6,11 @@ const state = {
     withoutAnimation: false
   },
   device: 'desktop',
-  globalLoading: false
+  globalLoading: false,
+  showMainApp: false,
+  showV2App: false,
+  showV3App: false,
+  subApps: new Set()
 }
 
 const mutations = {
@@ -29,6 +33,27 @@ const mutations = {
   },
   SET_GLOBAL_LOADING: (state, val) => {
     state.globalLoading = val
+  },
+  displayCurHiddenOtherApps: (state, val) => {
+    if (val === 'v2-sub-app') {
+      state.showV2App = true
+      state.showMainApp = false
+      state.showV3App = false
+    } else if (val === 'v3-sub-app') {
+      state.showV2App = false
+      state.showMainApp = false
+      state.showV3App = true
+    } else {
+      state.showV2App = false
+      state.showV3App = false
+      state.showMainApp = true
+    }
+  },
+  addSubApps: (state, val) => {
+    state.subApps.add(val)
+  },
+  deleteSubApps: (state, val) => {
+    state.subApps.delete(val)
   }
 }
 

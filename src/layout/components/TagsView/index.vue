@@ -67,8 +67,9 @@ export default {
     getToPathObj(tag) {
       let path = ''; let fullPath = ''
       if (tag.meta?.childApp) {
-        path = tag.href ? `/layout/${tag.meta.childApp}/${tag.href}` : `/layout/${tag.meta.childApp}${tag.path}`
-        fullPath = tag.href ? `/layout/${tag.meta.childApp}/${tag.href}` : `/layout/${tag.meta.childApp}${tag.path}`
+        const hashStr = tag.meta.mode === 'hash' ? '/#' : ''
+        path = `/layout/${tag.meta.childApp}${hashStr}${tag.path}`
+        fullPath = `/layout/${tag.meta.childApp}${hashStr}${tag.path}`
       } else {
         path = tag.fullPath
       }
@@ -80,7 +81,8 @@ export default {
     },
     isActive(route) {
       if (route.meta?.childApp) {
-        const matchPath = route.href ? `/layout/${route.meta.childApp}/${route.href}` : `/layout/${route.meta.childApp}${route.path}`
+        const hashStr = route.meta.mode === 'hash' ? '/#' : ''
+        const matchPath = `/layout/${route.meta.childApp}${hashStr}${route.path}`
         return matchPath.split('?')[0] === this.$route.fullPath
       } else {
         return route.path === this.$route.path
@@ -122,7 +124,6 @@ export default {
     addTags() {
       const { name } = this.$route
       if (name) {
-        console.log(this.$route, 'xxxfff')
         routeCache.addVisitedView(this.$route)
       }
       return false
@@ -166,7 +167,8 @@ export default {
         let lastRoutePath
         if (latestView.meta?.childApp) {
           // 子应用使用hash模式路由
-          lastRoutePath = latestView.href ? `/layout/${latestView.meta.childApp}/${latestView.href}` : `/layout/${latestView.meta.childApp}${latestView.path}`
+          const hashStr = latestView.meta.mode === 'hash' ? '/#' : ''
+          lastRoutePath = `/layout/${latestView.meta.childApp}${hashStr}${latestView.path}`
         }
         this.$router.push(latestView.meta?.childApp ? lastRoutePath : latestView.fullPath)
       } else {
